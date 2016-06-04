@@ -10,8 +10,7 @@ class laboratorio extends Model
     	public $timestamps = false;
 
     	public function equipaments(){
-
-    		return $this->hasMany('App\equipamentoLaboratorio');
+    		return $this->hasMany(equipamentoLaboratorio::class);
     	}
 
 }

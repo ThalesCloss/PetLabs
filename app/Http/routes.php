@@ -21,4 +21,6 @@ Route::get('/laboratorio/{id}','laboratorioController@laboratorio')->name('labor
 
 Route::auth();
 Route::get('/laboratorio','laboratorioController@index');
+Route::get('/cadastro','laboratorioController@cadastro')->name('cadastro');
+Route::post('/cadastro','laboratorioController@gravar')->name('gravar-cadastro');
 Route::get('/home', 'HomeController@index');
