@@ -3,7 +3,13 @@
 @section('content')
           <div class="container">
           <div class="row">
-                <img src="/img/Arquivo_000.jpeg" class="anorama"  width="{{$lab->getSize()->w}}" height="{{$lab->getSize()->h}}" />
+            <div class=" text-center">
+
+  {!! QrCode::size(250)->generate(Request::url()); !!}
+  <p>Scan me to return to the original page.</p>
+  {{$lab->panoramicImage}}
+</div>
+                <img src="{{$lab->panoramicImage}}" class="anorama"  width="{{$lab->getSize()->w}}" height="{{$lab->getSize()->h}}" />
                 <div class="title">{{$lab->name}}</div>
                 <span>{{$lab->location}}</span>
                 <ul>

@@ -35,6 +35,7 @@ class laboratorioController extends Controller
             $this->laboratorio->name=$request->get('name');
             $this->laboratorio->location=$request->get('location');
             $this->laboratorio->panoramicImage=$request->get('panoramicImage');
+            $this->laboratorio->size=json_encode(['w'=>$request->get('w'),'h'=>$request->get('h')]);
             $this->laboratorio->save();
             return redirect()->route('laboratorios');
         }
@@ -56,7 +57,7 @@ class laboratorioController extends Controller
             if(Image::make($image->getRealPath())->resize($wn, $hn)->save($path,85))
             //if($request->file('file')->move('img','img.teste' ))
             {
-              return response()->json(array('path'=>'img/'.$filename,'w'=>$wn,'h'=>$hn),200);
+              return response()->json(array('path'=>'/img/'.$filename,'w'=>$wn,'h'=>$hn),200);
             }
             else {
               return response()->json(array('error'=>'Erro ao fazer o upload'),400);

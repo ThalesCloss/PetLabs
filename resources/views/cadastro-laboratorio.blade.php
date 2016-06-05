@@ -61,22 +61,45 @@
                                 @endif
                             </div>
                         </div>
+                        <div class="objetos">
+                          <div class="item">
+                            <input type="radio" name="item" value="">
+                              <input type="text" name="x_objeto" value="">
+                              <input type="text" name="y_objeto" value="">
+                              <input type="text" name="w_objeto" value="">
+                              <input type="text" name="h_objeto" value="">
+                            <div class="form-group">
+                                <div class="col-md-6">
+                                  <input class="form-control" type="text" name="nome_objeto" value="" placeholder="Nome do equipamento ou objeto">
+                                </div>
+                                <div class="col-md-4">
+                                    <a class="remover" >Remover</a>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="col-md-6">
+                                  <textarea class="form-control" name="descricao_objeto" rows="8" placeholder="Descreva o item marcado"></textarea>
+                                </div>
+                            </div>
+                          </div>
+                        </div>
 
-                        <div class="form-group">
-                          <label class="col-md-4 control-label">Objeto marcado</label>
-                          <input type="text" name="objeto[]" value="">
-                        </div>
-                        <div class="form-group">
-                          <label class="col-md-4 control-label">Objeto marcado</label>
-                          <input type="text" name="objeto[]" value="">
-                        </div>
+
+
                         <input type="hidden" class="form-control" name="panoramicImage" value="{{ old('panoramicImage') }}">
-                        <input type="hidden" name="w" value="{{old('size.w')}}">
-                        <input type="hidden" name="w" value="{{old('size.h')}}">
+                        <input type="hidden" name="w" value="{{old('size->w')}}">
+                        <input type="hidden" name="h" value="{{old('size->h')}}">
                         <div class="form-group">
                             <div class="col-md-6 col-md-offset-4">
                                 <button type="submit" class="btn btn-primary">
                                     <i class="fa fa-btn fa-sign-in"></i>Salvar
+                                </button>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="col-md-6 col-md-offset-4">
+                                <button id="addItem" type="button" class="btn btn-success">
+                                    <i class="fa fa-btn fa-sign-in"></i>Adicionar item
                                 </button>
                             </div>
                         </div>
@@ -97,11 +120,44 @@
   <script type="text/javascript" src="/bower/jqueryVirtualTour/jquery.panorama.js"></script>
 
   <script>
-
+var item='<div class="item">'+$('.item').html()+"</div>";
 $(document).ready(function() {
+  $("input[name=item]").prop('checked',true);
+
   var seletor=$('#panoramic').imgAreaSelect({onSelectEnd:function(img,selection){
-    console.log(selection);
-  }, handles: true });
+    $("input[name=item]:checked").parent().find('input[name=x_objeto]').val(selection.x1);
+    $("input[name=item]:checked").parent().find('input[name=y_objeto]').val(selection.y1);
+    $("input[name=item]:checked").parent().find('input[name=h_objeto]').val(selection.height);
+    $("input[name=item]:checked").parent().find('input[name=w_objeto]').val(selection.width);
+  }, handles: true,instance: true });
+
+
+  $("#addItem").on('click',function(){
+    console.log(seletor.getSelection());
+    $(item).appendTo('.objetos');
+    $('input[name=item]').last().prop('checked',true);
+    return false;
+  });
+
+  $(".objetos").on('click','.remover',function(e){
+    console.log('remove');
+    $(this).parents('.item').remove();
+    return false;
+  });
+
+  $(".objetos").on('change','input[name=item]',function(){
+    console.log($("input[name=item]:checked").parent().find('input[name=x_objeto]').val());
+    seletor.cancelSelection();
+    seletor.setSelection(
+    $("input[name=item]:checked").parent().find('input[name=x_objeto]').val(),
+    $("input[name=item]:checked").parent().find('input[name=y_objeto]').val(),
+    $("input[name=item]:checked").parent().find('input[name=y_objeto]').val()+$("input[name=item]:checked").parent().find('input[name=h_objeto]').val(),
+    $("input[name=item]:checked").parent().find('input[name=x_objeto]').val()+$("input[name=item]:checked").parent().find('input[name=w_objeto]').val());
+    seletor.setOptions({ show: true });
+    seletor.update();
+    console.log(seletor.getSelection());
+    console.log('checked');
+  });
 
 //Dropzone.js Options - Upload an image via AJAX.
 Dropzone.options.myDropzone = {
@@ -125,6 +181,8 @@ Dropzone.options.myDropzone = {
       $('#panoramic').attr('src', res.path);
       $('#img-thumb-preview').show();
       $('input[name="panoramicImage"]').val(res.path);
+      $('input[name="w"]').val(res.w);
+      $('input[name="h"]').val(res.h);
       $("#erroUp").html("");
       var p =$("#panoramic").panorama({
           viewport_width: 1020,
