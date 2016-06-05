@@ -30,4 +30,12 @@ class Laboratorio extends Request
             'panoramicImage'=>'required'
         ];
     }
+
+    public function messages(){
+        return[
+          'name.required'=>'O nome do local é obrigatorio.',
+          'location.required'=>'O local onde é obrigatorio.',
+          'panoramicImage.*'=>'Carrege um arquivo de imagem.'
+        ];
+    }
 }

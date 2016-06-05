@@ -1,0 +1,20 @@
+<html>
+  <head>
+    <title></title>
+    <meta content="">
+    <style></style>
+     <link rel="stylesheet" type="text/css" href="css/imgareaselect-default.css" />
+  <script type="text/javascript" src="scripts/jquery.min.js"></script>
+  <script type="text/javascript" src="scripts/jquery.imgareaselect.pack.js"></script>
+  </head>
+  <body>
+    <script type="text/javascript">
+$(document).ready(function () {
+  $('#ladybug_ant').imgAreaSelect({ maxWidth: 200, maxHeight: 150, handles: true });
+});
+</script>
+  
+<img id="ladybug_ant" src="http://odyniec.net/projects/imgareaselect/ladybug_ant.jpg" alt="A ladybug being harassed by an ant." title="A ladybug being harassed by an ant."></img>
+
+  </body>
+</html>

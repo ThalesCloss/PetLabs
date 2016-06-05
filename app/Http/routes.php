@@ -24,3 +24,4 @@ Route::get('/laboratorio','laboratorioController@index');
 Route::get('/cadastro','laboratorioController@cadastro')->name('cadastro');
 Route::post('/cadastro','laboratorioController@gravar')->name('gravar-cadastro');
 Route::get('/home', 'HomeController@index');
+Route::post('/uploadImagem','laboratorioController@uploadPanoramicView')->name('uploadPanoramicView');
