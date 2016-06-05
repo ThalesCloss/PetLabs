@@ -3,7 +3,7 @@
 @section('content')
           <div class="container">
           <div class="row">
-                <img src="/img/Arquivo_000.jpeg" class="anorama"  width="2642" height="375" />
+                <img src="/img/Arquivo_000.jpeg" class="anorama"  width="{{$lab->getSize()->w}}" height="{{$lab->getSize()->h}}" />
                 <div class="title">{{$lab->name}}</div>
                 <span>{{$lab->location}}</span>
                 <ul>

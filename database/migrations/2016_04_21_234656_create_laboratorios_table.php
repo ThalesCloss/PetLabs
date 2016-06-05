@@ -17,6 +17,7 @@ class CreateLaboratoriosTable extends Migration
             $table->string('name',30);
             $table->string('location',20);
             $table->string('panoramicImage',255);
+            $table->json('size');
         });
     }
 

@@ -34,8 +34,7 @@ class laboratorioController extends Controller
         public function gravar(Requests\Laboratorio $request){
             $this->laboratorio->name=$request->get('name');
             $this->laboratorio->location=$request->get('location');
-
-            $this->laboratorio->panoramicImage=$request->file('panoramicImage')->getClientOriginalName();
+            $this->laboratorio->panoramicImage=$request->get('panoramicImage');
             $this->laboratorio->save();
             return redirect()->route('laboratorios');
         }

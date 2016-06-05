@@ -8,11 +8,12 @@
   }
 
 </style>
-<div class="container">
+<div class="container" ng-controller="cadastro-laboratorio">
+  <%teste%>
     <div class="row">
-        <div class="col-md-8 col-md-offset-2">
+        <div class="col-md-12 ">
             <div class="panel panel-default">
-                <div class="panel-heading">Login</div>
+                <div class="panel-heading">Cadastro de Laboratórios</div>
                 <div class="panel-body">
                     <form class="form" id="my-dropzone" role="form single-dropzone" method="POST" enctype="multipart/form-data"  action="{{ route('uploadPanoramicView') }}">
                       {!! csrf_field() !!}
@@ -60,7 +61,18 @@
                                 @endif
                             </div>
                         </div>
+
+                        <div class="form-group">
+                          <label class="col-md-4 control-label">Objeto marcado</label>
+                          <input type="text" name="objeto[]" value="">
+                        </div>
+                        <div class="form-group">
+                          <label class="col-md-4 control-label">Objeto marcado</label>
+                          <input type="text" name="objeto[]" value="">
+                        </div>
                         <input type="hidden" class="form-control" name="panoramicImage" value="{{ old('panoramicImage') }}">
+                        <input type="hidden" name="w" value="{{old('size.w')}}">
+                        <input type="hidden" name="w" value="{{old('size.h')}}">
                         <div class="form-group">
                             <div class="col-md-6 col-md-offset-4">
                                 <button type="submit" class="btn btn-primary">
@@ -77,11 +89,13 @@
 @endsection
 
 @section('scripts')
+  <script src="/js/cadastroController.js"></script>
   <script src="/bower/dropzone/dropzone.js"></script>
   <link rel="stylesheet" type="text/css" href="/bower/jquery.imgareaselect-0.9.10/css/imgareaselect-default.css" />
   <script type="text/javascript" src="/bower/jquery.imgareaselect-0.9.10/scripts/jquery.imgareaselect.pack.js"></script>
   <link rel="stylesheet" type="text/css" href="/bower/jqueryVirtualTour/css/jquery.panorama.css" media="screen" />
   <script type="text/javascript" src="/bower/jqueryVirtualTour/jquery.panorama.js"></script>
+
   <script>
 
 $(document).ready(function() {
@@ -112,12 +126,13 @@ Dropzone.options.myDropzone = {
       $('#img-thumb-preview').show();
       $('input[name="panoramicImage"]').val(res.path);
       $("#erroUp").html("");
-      $("#panoramic").panorama({
+      var p =$("#panoramic").panorama({
           viewport_width: 1020,
           speed: 30000,
           direction: 'left',
           control_display: 'yes'
       });
+      console.log(p);
     });
     this.on("error",function(errorMessage,resp){
       $("#erroUp").html("Falha no envio do arquivo: "+resp.error);

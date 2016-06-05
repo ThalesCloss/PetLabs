@@ -17,6 +17,7 @@ class CreateEquipamentoLaboratoriosTable extends Migration
             $table->string('name',255);
             $table->text('description');
             $table->string('image',255);
+            $table->json('coords');
             $table->integer('laboratorio_id');
             $table->foreign('laboratorio_id')->references('id')->on('laboratorios');
         });
