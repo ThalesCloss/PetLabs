@@ -72,6 +72,7 @@
                               <input type="text" name="y_objeto" value="">
                               <input type="text" name="w_objeto" value="">
                               <input type="text" name="h_objeto" value="">
+
                             <div class="form-group">
                                 <div class="col-md-6">
                                   <input class="form-control" type="text" name="nome_objeto" value="" placeholder="Nome do equipamento ou objeto">
@@ -135,17 +136,14 @@ $(document).ready(function() {
     $("input[name=item]:checked").parent().find('input[name=w_objeto]').val(selection.width);
   }, handles: true,instance: true });
 
-
   $("#addItem").on('click',function(){
     seletor.cancelSelection();
-    console.log(seletor.getSelection());
     $(item).appendTo('.objetos');
     $('input[name=item]').last().prop('checked',true);
     return false;
   });
 
   $(".objetos").on('click','.remover',function(e){
-    console.log('remove');
     $(this).parents('.item').remove();
     return false;
   });
@@ -153,18 +151,15 @@ $(document).ready(function() {
   $(".objetos").on('change','input[name=item]',function(){
     seletor.cancelSelection();
     if($("input[name=item]:checked").parent().find('input[name=x_objeto]').val()!=""){
-    console.log(
-    Number($("input[name=item]:checked").parent().find('input[name=x_objeto]').val()),
-    Number($("input[name=item]:checked").parent().find('input[name=y_objeto]').val()),
-    Number($("input[name=item]:checked").parent().find('input[name=x_objeto]').val())+Number($("input[name=item]:checked").parent().find('input[name=w_objeto]').val()),
-    Number($("input[name=item]:checked").parent().find('input[name=y_objeto]').val())+Number($("input[name=item]:checked").parent().find('input[name=h_objeto]').val()),true);;
-    seletor.setSelection(
-    Number($("input[name=item]:checked").parent().find('input[name=x_objeto]').val()),
-    Number($("input[name=item]:checked").parent().find('input[name=y_objeto]').val()),
-    Number($("input[name=item]:checked").parent().find('input[name=y_objeto]').val())+Number($("input[name=item]:checked").parent().find('input[name=h_objeto]').val()),
-    Number($("input[name=item]:checked").parent().find('input[name=x_objeto]').val())+Number($("input[name=item]:checked").parent().find('input[name=w_objeto]').val()),true);
+      var x=parseInt($("input[name=item]:checked").parent().find('input[name=x_objeto]').val());
+      var y=parseInt($("input[name=item]:checked").parent().find('input[name=y_objeto]').val());
+      var w=parseInt($("input[name=item]:checked").parent().find('input[name=w_objeto]').val());
+      var h=parseInt($("input[name=item]:checked").parent().find('input[name=h_objeto]').val());
+      console.log(Math.round(x),Math.round(y),Math.round(y+h),Math.round(x+w),true);
+    seletor.setSelection(Math.round(x),Math.round(y),Math.round(y+h),Math.round(x+w),true);
     seletor.setOptions({ show: true });
     seletor.update();
+    console.log(seletor.getSelection());
   }
   });
 
@@ -193,13 +188,6 @@ Dropzone.options.myDropzone = {
       $('input[name="w"]').val(res.w);
       $('input[name="h"]').val(res.h);
       $("#erroUp").html("");
-      // var p =$("#panoramic").panorama({
-      //     viewport_width: 1020,
-      //     speed: 30000,
-      //     direction: 'left',
-      //     control_display: 'yes'
-      // });
-      // console.log(p);
     });
     this.on("error",function(errorMessage,resp){
       $("#erroUp").html("Falha no envio do arquivo: "+resp.error);
