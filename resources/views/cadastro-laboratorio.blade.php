@@ -6,7 +6,11 @@
   .dz-image-preview, .dz-file-preview {
     display: none;
   }
-
+  #img-thumb-preview{
+    overflow-x:scroll;
+    padding: 0;
+    margin: 0;
+  }
 </style>
 <div class="container" ng-controller="cadastro-laboratorio">
   <%teste%>
@@ -18,7 +22,7 @@
                     <form class="form" id="my-dropzone" role="form single-dropzone" method="POST" enctype="multipart/form-data"  action="{{ route('uploadPanoramicView') }}">
                       {!! csrf_field() !!}
                       <div class="form-group{{ $errors->has('panoramicImage') ? ' has-error' : '' }}">
-                        <div id="img-thumb-preview" style="display:none">
+                        <div id="img-thumb-preview" class="col-md-12 col-lg-12" style="display:none">
                           <img id="panoramic"  src="{{old('panoramicImage')}}">
                         </div>
                               @if ($errors->has('panoramicImage'))
@@ -133,6 +137,7 @@ $(document).ready(function() {
 
 
   $("#addItem").on('click',function(){
+    seletor.cancelSelection();
     console.log(seletor.getSelection());
     $(item).appendTo('.objetos');
     $('input[name=item]').last().prop('checked',true);
@@ -146,17 +151,21 @@ $(document).ready(function() {
   });
 
   $(".objetos").on('change','input[name=item]',function(){
-    console.log($("input[name=item]:checked").parent().find('input[name=x_objeto]').val());
     seletor.cancelSelection();
+    if($("input[name=item]:checked").parent().find('input[name=x_objeto]').val()!=""){
+    console.log(
+    Number($("input[name=item]:checked").parent().find('input[name=x_objeto]').val()),
+    Number($("input[name=item]:checked").parent().find('input[name=y_objeto]').val()),
+    Number($("input[name=item]:checked").parent().find('input[name=x_objeto]').val())+Number($("input[name=item]:checked").parent().find('input[name=w_objeto]').val()),
+    Number($("input[name=item]:checked").parent().find('input[name=y_objeto]').val())+Number($("input[name=item]:checked").parent().find('input[name=h_objeto]').val()),true);;
     seletor.setSelection(
-    $("input[name=item]:checked").parent().find('input[name=x_objeto]').val(),
-    $("input[name=item]:checked").parent().find('input[name=y_objeto]').val(),
-    $("input[name=item]:checked").parent().find('input[name=y_objeto]').val()+$("input[name=item]:checked").parent().find('input[name=h_objeto]').val(),
-    $("input[name=item]:checked").parent().find('input[name=x_objeto]').val()+$("input[name=item]:checked").parent().find('input[name=w_objeto]').val());
+    Number($("input[name=item]:checked").parent().find('input[name=x_objeto]').val()),
+    Number($("input[name=item]:checked").parent().find('input[name=y_objeto]').val()),
+    Number($("input[name=item]:checked").parent().find('input[name=y_objeto]').val())+Number($("input[name=item]:checked").parent().find('input[name=h_objeto]').val()),
+    Number($("input[name=item]:checked").parent().find('input[name=x_objeto]').val())+Number($("input[name=item]:checked").parent().find('input[name=w_objeto]').val()),true);
     seletor.setOptions({ show: true });
     seletor.update();
-    console.log(seletor.getSelection());
-    console.log('checked');
+  }
   });
 
 //Dropzone.js Options - Upload an image via AJAX.
@@ -184,13 +193,13 @@ Dropzone.options.myDropzone = {
       $('input[name="w"]').val(res.w);
       $('input[name="h"]').val(res.h);
       $("#erroUp").html("");
-      var p =$("#panoramic").panorama({
-          viewport_width: 1020,
-          speed: 30000,
-          direction: 'left',
-          control_display: 'yes'
-      });
-      console.log(p);
+      // var p =$("#panoramic").panorama({
+      //     viewport_width: 1020,
+      //     speed: 30000,
+      //     direction: 'left',
+      //     control_display: 'yes'
+      // });
+      // console.log(p);
     });
     this.on("error",function(errorMessage,resp){
       $("#erroUp").html("Falha no envio do arquivo: "+resp.error);
