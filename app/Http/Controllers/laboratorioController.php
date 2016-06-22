@@ -37,6 +37,8 @@ class laboratorioController extends Controller
             $this->laboratorio->panoramicImage=$request->get('panoramicImage');
             $this->laboratorio->size=json_encode(['w'=>$request->get('w'),'h'=>$request->get('h')]);
             $this->laboratorio->save();
+            
+            dd($request);
             return redirect()->route('laboratorios');
         }
         public function uploadPanoramicView(Request $request){

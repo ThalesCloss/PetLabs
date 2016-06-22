@@ -68,14 +68,14 @@
                         <div class="objetos">
                           <div class="item">
                             <input type="radio" name="item" value="">
-                              <input type="text" name="x_objeto" value="">
-                              <input type="text" name="y_objeto" value="">
-                              <input type="text" name="w_objeto" value="">
-                              <input type="text" name="h_objeto" value="">
+                              <input type="text" name="item[][x_objeto][]" value="">
+                              <input type="text" name="item[][y_objeto][]" value="">
+                              <input type="text" name="item[][w_objeto][]" value="">
+                              <input type="text" name="item[][h_objeto][]" value="">
 
                             <div class="form-group">
                                 <div class="col-md-6">
-                                  <input class="form-control" type="text" name="nome_objeto" value="" placeholder="Nome do equipamento ou objeto">
+                                  <input class="form-control" type="text" name="item[][nome_objeto][]" value="" placeholder="Nome do equipamento ou objeto">
                                 </div>
                                 <div class="col-md-4">
                                     <a class="remover" >Remover</a>
@@ -83,7 +83,7 @@
                             </div>
                             <div class="form-group">
                                 <div class="col-md-6">
-                                  <textarea class="form-control" name="descricao_objeto" rows="8" placeholder="Descreva o item marcado"></textarea>
+                                  <textarea class="form-control" name="item[][descricao_objeto][]" rows="8" placeholder="Descreva o item marcado"></textarea>
                                 </div>
                             </div>
                           </div>
