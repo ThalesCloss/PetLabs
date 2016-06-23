@@ -13,5 +13,8 @@ class equipamentoLaboratorio extends Model
 	public function laboratorio(){
 		return $this->belongsTo('App\laboratorio');
 	}
+	public function getCoords(){
+		return json_decode($this->coords);
+	}
     //
 }

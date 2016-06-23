@@ -19,5 +19,11 @@ class laboratorio extends Model
 				isset($a_size)?null:$a_size=json_decode($this->size);
 				return $a_size;
 			}
+			public function getSizeW(){
+				return isset($this->size)?json_decode($this->size)->w:0;
+			}
+			public function getSizeH(){
+				return isset($this->size)?json_decode($this->size)->h:0;
+			}
 
 }
