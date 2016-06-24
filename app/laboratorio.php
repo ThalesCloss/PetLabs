@@ -26,4 +26,8 @@ class laboratorio extends Model
 				return isset($this->size)?json_decode($this->size)->h:0;
 			}
 
+			public function getUrl(){
+				return base64_encode($this->id);
+			}
+
 }

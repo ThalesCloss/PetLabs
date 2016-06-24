@@ -10,7 +10,8 @@
       </div>
       @if(!Auth::guest())
       <div class="">
-        <a class="" href="{{url('cadastro',$lab->id)}}">Editar</a>
+        <a class="btn btn-success" href="{{url('cadastro',$lab->id)}}"><span class="glyphicon glyphicon-edit"></span> Editar</a>
+        <a class="btn btn-danger" href="{{route('excluir-tudo',$lab->id)}}" onclick="if(!confirm('Isso irá excluir o local e todos os itens cadastrados, deseja continuar?'))return false;"><span class="glyphicon glyphicon-trash"></span> Excluir tudo</a>
       </div>
       @endif
       <div class="row">

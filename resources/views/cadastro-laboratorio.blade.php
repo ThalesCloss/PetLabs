@@ -13,18 +13,20 @@
 }
 </style>
 <div class="container" ng-controller="cadastro-laboratorio">
-  <%teste%>
   <div class="row">
-    <div class="col-md-12 ">
+    <div class="col-md-12 col-md-12 col-sm-12 col-xs-12">
       <div class="panel panel-default">
         <div class="panel-heading">Cadastro de Laboratórios {{isset($laboratorio)?'-> Editando '.$laboratorio->name:''}}</div>
         <div class="panel-body">
           <form class="form" id="my-dropzone" role="form single-dropzone" method="POST" enctype="multipart/form-data"  action="{{ route('uploadPanoramicView') }}">
             {!! csrf_field() !!}
 
-            <div class="form-group{{ $errors->has('panoramicImage') ? ' has-error' : '' }}">
-              <div id="img-thumb-preview" class="col-md-12 col-lg-12">
-                <img id="panoramic"  src="{{$laboratorio->panoramicImage or old('panoramicImage')}}">
+            <div class="form-group {{ $errors->has('panoramicImage') ? ' has-error' : '' }}">
+              <div class="row">
+                <div id="img-thumb-preview" class="col-md-12 col-lg-12">
+                  <img id="panoramic"  src="{{$laboratorio->panoramicImage or old('panoramicImage')}}">
+                </div>
+
               </div>
               @if ($errors->has('panoramicImage'))
               <span class="help-block">
@@ -34,17 +36,20 @@
               <span id="erroUp" class="help-block">
 
               </span>
+              <br>
+              <span id="status" class="alert"></span>
             </div>
-            <button id="upload-submit" class="btn btn-default margin-t-5"><i class="fa fa-upload"></i> Carregar imagem panorâmica</button>
+            <button id="upload-submit" class="btn btn-default"><i class="fa fa-upload"></i> Carregar imagem panorâmica</button>
           </form>
+          <br>
           <form class="form-horizontal" role="form" method="POST" enctype="multipart/form-data"  action="{{ route('gravar-cadastro') }}">
             {!! csrf_field() !!}
             <input type="hidden" name="id" value="{{$laboratorio->id or ''}}">
-            <div class="form-group{{ $errors->has('name') ? ' has-error' : '' }}">
-              <label class="col-md-4 control-label">Nome</label>
+            <div class="form-group {{ $errors->has('name') ? ' has-error' : '' }}">
+              <label class="col-lg-12 col-md-12 col-sm-12 col-xs-12">Nome</label>
+              <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
 
-              <div class="col-md-6">
-                <input type="text" required class="form-control" name="name" value="{{$laboratorio->name or old('name') }}">
+                <input type="text" maxlength="100" required class="form-control" name="name" value="{{$laboratorio->name or old('name') }}">
 
                 @if ($errors->has('name'))
                 <span class="help-block">
@@ -55,10 +60,10 @@
             </div>
 
             <div class="form-group{{ $errors->has('location') ? ' has-error' : '' }}">
-              <label class="col-md-4 control-label">Local</label>
+              <label class="col-lg-12 col-md-12 col-sm-12 col-xs-12">Local</label>
 
-              <div class="col-md-6">
-                <input type="text" required class="form-control" name="location" value="{{$laboratorio->location or old('location') }}">
+              <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                <input type="text" required class="form-control" maxlength="100" name="location" value="{{$laboratorio->location or old('location') }}">
 
                 @if ($errors->has('location'))
                 <span class="help-block">
@@ -68,32 +73,43 @@
               </div>
             </div>
             <div class="form-group">
-              <div class="col-md-6 col-md-offset-4">
+              <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6">
                 <button id="addItem" type="button" class="btn btn-success">
-                  <i class="fa fa-btn fa-sign-in"></i>Adicionar item
+                  <i class="glyphicon glyphicon-plus"></i> Adicionar item
                 </button>
               </div>
+
+                <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6">
+                  <button type="submit" class="btn btn-primary">
+                    <i class="glyphicon glyphicon-floppy-saved"></i> Salvar tudo
+                  </button>
+                  @if(isset($laboratorio))
+                  <a class="btn btn-danger" href="{{route('excluir-tudo',$laboratorio->id)}}" onclick="if(!confirm('Isso irá excluir o local e todos os itens cadastrados, deseja continuar?'))return false;"><span class="glyphicon glyphicon-trash"></span> Excluir tudo</a>
+                  @endif
+                </div>
             </div>
             <div class="objetos">
               @foreach($equipaments as $equipament)
               <div class="item">
-                <input type="radio" name="item" value="">
                 <input type="hidden" name="id_equipamento[]" value="{{$equipament->id}}">
                 <input type="hidden" required name="x_objeto[]" value="{{$equipament->getCoords()->x_objeto}}">
                 <input type="hidden" required name="y_objeto[]" value="{{$equipament->getCoords()->y_objeto}}">
                 <input type="hidden" required name="w_objeto[]" value="{{$equipament->getCoords()->w_objeto}}">
                 <input type="hidden" required name="h_objeto[]" value="{{$equipament->getCoords()->h_objeto}}">
                 <div class="form-group">
-                  <div class="col-md-6">
-                    <input class="form-control" required type="text" name="nome_objeto[]" value="{{$equipament->name}}" placeholder="Nome do equipamento ou objeto">
+                  <div class="col-lg-1 col-sm-1 col-md-1 col-xs-12">
+                    <input type="radio" name="item" value="">
                   </div>
-                  <div class="col-md-4">
-                    <a class="remover" data-remove="{{$equipament->id}}">Remover</a>
+                  <div class="col-lg-9 col-md-9 col-sm-8 col-xs-12">
+                    <input class="form-control" maxlength="255" required type="text" name="nome_objeto[]" value="{{$equipament->name}}" placeholder="Nome do equipamento ou objeto">
+                  </div>
+                  <div class="col-lg-2 col-md-2 col-sm-3 col-xs-12">
+                    <a class="remover btn btn-danger"  data-remove="{{$equipament->id}}"><span class=""></span><span class="glyphicon glyphicon-trash"></span> Remover</a>
                   </div>
                 </div>
                 <div class="form-group">
-                  <div class="col-md-6">
-                    <textarea class="form-control" required name="descricao_objeto[]" rows="8" placeholder="Descreva o item marcado">{{$equipament->description}}</textarea>
+                  <div class="col-md-12">
+                    <textarea class="form-control"  required name="descricao_objeto[]" rows="8" placeholder="Descreva o item marcado">{{$equipament->description}}</textarea>
                   </div>
                 </div>
               </div>
@@ -105,13 +121,7 @@
             <input type="hidden" required class="form-control" name="panoramicImage" value="{{$laboratorio->panoramicImage or old('panoramicImage') }}">
             <input type="hidden" required name="w" value="{{isset($laboratorio)?$laboratorio->getSizeW():''}}">
             <input type="hidden" required name="h" value="{{isset($laboratorio)?$laboratorio->getSizeH():''}}">
-            <div class="form-group">
-              <div class="col-md-6 col-md-offset-4">
-                <button type="submit" class="btn btn-primary">
-                  <i class="fa fa-btn fa-sign-in"></i>Salvar
-                </button>
-              </div>
-            </div>
+
 
           </form>
         </div>
@@ -131,12 +141,14 @@
 
 <script>
 var item=
-'<div class="item"><input type="radio" name="item" value="">'+
+'<div class="item">'+
 '<input type="hidden" required name="x_objeto[]" value=""><input type="hidden" required name="y_objeto[]" value="">'+
 '<input type="hidden" required name="w_objeto[]" value=""><input type="hidden" required name="h_objeto[]" value="">'+
-'<div class="form-group"><div class="col-md-6"><input class="form-control" required type="text" name="nome_objeto[]" value="" placeholder="Nome do equipamento ou objeto"></div>'+
-'<div class="col-md-4"><a class="remover" >Remover</a></div></div>'+
-'<div class="form-group"><div class="col-md-6"><textarea class="form-control" required name="descricao_objeto[]" rows="8" placeholder="Descreva o item marcado"></textarea></div></div></div>';
+'<div class="form-group"><div class="col-lg-1 col-sm-1 col-md-1 col-xs-12"><input type="radio"  name="item" value=""></div>'+
+'<div class="col-lg-9 col-md-9 col-sm-8 col-xs-12"><input class="form-control" maxlength="255" required type="text" name="nome_objeto[]" value="" placeholder="Nome do equipamento ou objeto">'+
+'</div><div class="col-lg-2 col-md-2 col-sm-3 col-xs-12"><a class="remover btn btn-danger"><span class=""></span><span class="glyphicon glyphicon-trash"></span> Remover</a>'+
+'</div></div><div class="form-group"><div class="col-md-12">'+
+'<textarea class="form-control"  required name="descricao_objeto[]" rows="8" placeholder="Descreva o item marcado"></textarea></div></div></div>';
 $(document).ready(function() {
   $("input[name=item]").prop('checked',true);
 
@@ -196,7 +208,8 @@ $(document).ready(function() {
     dictDefaultMessage: '',
     init: function() {
       this.on("addedfile", function(file) {
-        // console.log('addedfile...');
+        $('#status').addClass('alert-info');
+        $("#status").html("Aguarde, carregando a imagem....");
       });
       this.on("thumbnail", function(file, dataUrl) {
         // console.log('thumbnail...');
@@ -211,6 +224,9 @@ $(document).ready(function() {
         $('input[name="panoramicImage"]').val(res.path);
         $('input[name="w"]').val(res.w);
         $('input[name="h"]').val(res.h);
+        $('#status').removeClass('alert-info');
+        $('#status').addClass('alert-success');
+        $("#status").html("Imagem carregada com sucesso, faça as marcações de objetos");
         $("#erroUp").html("");
       });
       this.on("error",function(errorMessage,resp){

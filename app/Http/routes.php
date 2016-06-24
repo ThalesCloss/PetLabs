@@ -26,3 +26,4 @@ Route::post('/cadastro','laboratorioController@gravar')->name('gravar-cadastro')
 Route::get('/home', 'HomeController@index');
 Route::post('/uploadImagem','laboratorioController@uploadPanoramicView')->name('uploadPanoramicView');
 Route::delete('/equipamento','laboratorioController@excluirEquipamento')->name('excluir-equipamento');
+Route::get('/excluir/{id}','laboratorioController@excluirTudo')->name('excluir-tudo');

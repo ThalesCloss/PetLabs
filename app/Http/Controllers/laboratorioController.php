@@ -21,8 +21,12 @@ class laboratorioController extends Controller
        	}
 
     	public function laboratorio($id){
-    		$this->laboratorio=$this->laboratorio->find($id);
-            return view('laboratorio',['lab'=>$this->laboratorio,'equipaments'=>$this->laboratorio->equipaments]);
+            if(is_int((int)base64_decode($id)))
+    		      $this->laboratorio=$this->laboratorio->find((int)base64_decode($id));
+            if(isset($this->laboratorio->id))
+              return view('laboratorio',['lab'=>$this->laboratorio,'equipaments'=>$this->laboratorio->equipaments]);
+            else
+            return redirect('/');
     	}
 
         public function cadastro($id = null){
@@ -98,5 +102,13 @@ class laboratorioController extends Controller
           else {
             return response()->json(['code'=>0,'message'=>'Erro ao exlcuir'],300);
           }
+        }
+
+        public function excluirTudo($id){
+          if(!Auth::guest())
+          {
+            $this->laboratorio->destroy($id);
+          }
+          return redirect('/');
         }
 }
