@@ -63,7 +63,6 @@ class laboratorioController extends Controller
                     'w_objeto'=>$request->get('w_objeto')[$i],
                     'h_objeto'=>$request->get('h_objeto')[$i],
                   ]);
-              $this->equipamento->image='this is image';
               $this->equipamento->save();
             }
             return redirect()->route('laboratorios');
