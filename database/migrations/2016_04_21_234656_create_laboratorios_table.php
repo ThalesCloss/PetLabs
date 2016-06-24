@@ -14,8 +14,8 @@ class CreateLaboratoriosTable extends Migration
     {
         Schema::create('laboratorios', function (Blueprint $table) {
             $table->increments('id');
-            $table->string('name',30);
-            $table->string('location',20);
+            $table->string('name',100);
+            $table->string('location',100);
             $table->string('panoramicImage',255);
             $table->json('size');
         });
