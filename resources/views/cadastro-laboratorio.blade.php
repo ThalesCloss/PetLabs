@@ -153,10 +153,10 @@ $(document).ready(function() {
   $("input[name=item]").prop('checked',true);
 
   var seletor=$('#panoramic').imgAreaSelect({onSelectEnd:function(img,selection){
-    $("input[name=item]:checked").parent().find('input[name^=x_objeto]').val(selection.x1);
-    $("input[name=item]:checked").parent().find('input[name^=y_objeto]').val(selection.y1);
-    $("input[name=item]:checked").parent().find('input[name^=h_objeto]').val(selection.height);
-    $("input[name=item]:checked").parent().find('input[name^=w_objeto]').val(selection.width);
+    $("input[name=item]:checked").parents('.item').find('input[name^=x_objeto]').val(selection.x1);
+    $("input[name=item]:checked").parents('.item').find('input[name^=y_objeto]').val(selection.y1);
+    $("input[name=item]:checked").parents('.item').find('input[name^=h_objeto]').val(selection.height);
+    $("input[name=item]:checked").parents('.item').find('input[name^=w_objeto]').val(selection.width);
   }, handles: true,instance: true });
 
   $("#addItem").on('click',function(){
@@ -187,10 +187,10 @@ $(document).ready(function() {
     seletor.cancelSelection();
     if($("input[name=item]:checked").parent().find('input[name=x_objeto]').val()!=""){
       console.log('ch');
-      var x=parseInt($("input[name=item]:checked").parent().find('input[name^=x_objeto]').val());
-      var y=parseInt($("input[name=item]:checked").parent().find('input[name^=y_objeto]').val());
-      var w=parseInt($("input[name=item]:checked").parent().find('input[name^=w_objeto]').val());
-      var h=parseInt($("input[name=item]:checked").parent().find('input[name^=h_objeto]').val());
+      var x=parseInt($("input[name=item]:checked").parents('.item').find('input[name^=x_objeto]').val());
+      var y=parseInt($("input[name=item]:checked").parents('.item').find('input[name^=y_objeto]').val());
+      var w=parseInt($("input[name=item]:checked").parents('.item').find('input[name^=w_objeto]').val());
+      var h=parseInt($("input[name=item]:checked").parents('.item').find('input[name^=h_objeto]').val());
       console.log(Math.round(x),Math.round(y),Math.round(y+h),Math.round(x+w),true);
       seletor.setSelection(Math.round(x),Math.round(y),Math.round(y+h),Math.round(x+w),true);
       seletor.setOptions({ show: true });
